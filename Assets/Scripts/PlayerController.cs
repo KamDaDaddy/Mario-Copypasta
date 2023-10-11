@@ -28,7 +28,24 @@ public class PlayerController : MonoBehaviour
         dirtParticleSystem.Stop();
     }
 
+    void Update()
+    {
+        if(Input.GetKey(KeyCode.W))
+            transform.Translate(Vector3.forward * speed * Time.deltaTime);
+        
+        if(Input.GetKey(KeyCode.S))
+            transform.Translate(-Vector3.forward * speed * Time.deltaTime);
+        
+        if(Input.GetKey(KeyCode.A))
+            transform.Rotate(Vector3.up, -turnSpeed * Time.deltaTime);
+        
+        if(Input.GetKey(KeyCode.D))
+            transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime);
+    }
+
+
     // Update is called once per frame
+    /*
     void Update()
     {
     //Getting the horizontal/vertical axis for A D & W S movement
@@ -51,5 +68,5 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
+*/
 }
