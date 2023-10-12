@@ -5,7 +5,7 @@ using System.Threading;
 
 public class ObjectLifeTime : MonoBehaviour
 {
-    private float secondsLifeTime = 2.0f;
+    private float secondsLifeTime = 3.2f;
     private PlayerController controllerScript;
     
     // Start is called before the first frame update

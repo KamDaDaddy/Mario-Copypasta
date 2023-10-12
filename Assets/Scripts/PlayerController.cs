@@ -44,13 +44,18 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    public void OnCollisionEnter(Collision collision)
     {
-        if(collider.gameObject.CompareTag("Good"))
+        if(collision.gameObject.CompareTag("Good"))
         {
-            score = score + 2;
-            Destroy(other.gameObject);
+            ScoreManager.instance.AddScore();
         }
+    
+        if(collision.gameObject.CompareTag("Bad"))
+        {
+            ScoreManager.instance.SubPoint();
+        }
+
     }
 
 
