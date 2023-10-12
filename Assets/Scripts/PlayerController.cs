@@ -6,15 +6,14 @@ public class PlayerController : MonoBehaviour
 {
     //Public variables
     public int speed = 10;
-    
-    
+    public int score;
     public ParticleSystem dirtParticleSystem;
     public bool onGround = true;
-    public float horizontalInput;
+    //public float horizontalInput;
     public float verticalInput;
 
     //Private variables
-    private float turnSpeed = 100.0f;
+    private float turnSpeed = 300.0f;
     private Rigidbody playerRb;
     private Animator playerAnim;
     private bool isMoving;
@@ -30,43 +29,29 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetKey(KeyCode.W))
-            transform.Translate(Vector3.forward * speed * Time.deltaTime);
-        
-        if(Input.GetKey(KeyCode.S))
-            transform.Translate(-Vector3.forward * speed * Time.deltaTime);
-        
-        if(Input.GetKey(KeyCode.A))
-            transform.Rotate(Vector3.up, -turnSpeed * Time.deltaTime);
-        
-        if(Input.GetKey(KeyCode.D))
-            transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime);
-    }
-
-
-    // Update is called once per frame
-    /*
-    void Update()
-    {
-    //Getting the horizontal/vertical axis for A D & W S movement
-        horizontalInput = Input.GetAxis("Horizontal");
+        //Forward and backward set up motion with the z axis
         verticalInput = Input.GetAxis("Vertical");
+        transform.Translate(Vector3.forward * verticalInput * speed * Time.deltaTime);
 
-    //Uses W S & A D movement
-        transform.Translate(Vector3.forward * Time.deltaTime * speed * verticalInput);
-        transform.Translate(Vector3.right * Time.deltaTime * speed * horizontalInput);
-
-    //Check if keys A or D are being pressed, if so, rotate player internally.
-        if(horizontalInput > 0.1f)
+    //Rotating with A D into itself on the y axis
+        if(Input.GetKey(KeyCode.A))
         {
-            transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed, Space.Self);
+            transform.Rotate(Vector3.up, -turnSpeed * Time.deltaTime);
         }
-    
-        if(horizontalInput < 0.1f)
+        if(Input.GetKey(KeyCode.D))
         {
-            transform.Rotate(Vector3.up * Time.deltaTime * -turnSpeed, Space.Self);
+            transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime);
         }
-
     }
-*/
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(collider.gameObject.CompareTag("Good"))
+        {
+            score = score + 2;
+            Destroy(other.gameObject);
+        }
+    }
+
+
 }
