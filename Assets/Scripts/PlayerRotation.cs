@@ -13,14 +13,9 @@ public class PlayerRotation : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-
-        if (horizontalInput != 0)
-        {
-            float rotationAmount = horizontalInput * rotationSpeed * Time.deltaTime;
-            transform.Rotate(0, rotationAmount, 0);
-        }
+        float rotation = Input.GetAxis("Horizontal") * rotationSpeed * Time.deltaTime;
+        transform.Rotate(0f, rotation, 0f);
     }
 }

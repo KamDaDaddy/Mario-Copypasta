@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager instance;
-    public Text scoreText;
-    public Text numberScore;
+    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI numberScore;
     public int score = 0;
     
     private void Awake()
@@ -20,9 +21,9 @@ public class ScoreManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
     }
 
-    public void AddScore()
+    public void AddScore(int scoreToAdd)
     {
-        score += 3;
+        score += scoreToAdd;
         scoreText.text = "Score: " + score.ToString();
     }
 

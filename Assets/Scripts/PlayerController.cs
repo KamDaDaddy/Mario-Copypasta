@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public int score;
     public ParticleSystem dirtParticleSystem;
     public bool onGround = true;
-    //public float horizontalInput;
+    public float horizontalInput;
     public float verticalInput;
 
     //Private variables
@@ -31,30 +31,38 @@ public class PlayerController : MonoBehaviour
     {
         //Forward and backward set up motion with the z axis
         verticalInput = Input.GetAxis("Vertical");
+        horizontalInput = Input.GetAxis("Horizontal");
         transform.Translate(Vector3.forward * verticalInput * speed * Time.deltaTime);
 
-    //Rotating with A D into itself on the y axis
-        if(Input.GetKey(KeyCode.A))
+    //Uses W S & A D movement
+        transform.Translate(Vector3.forward * Time.deltaTime * speed * verticalInput);
+        transform.Rotate(Vector3.up * Time.deltaTime * turnSpeed * horizontalInput);
+
+        if(horizontalInput > 0 || horizontalInput < 0 || verticalInput > 0 || verticalInput < 0)
         {
-            transform.Rotate(Vector3.up, -turnSpeed * Time.deltaTime);
+            playerAnim.SetBool("Is Moving", true);
         }
-        if(Input.GetKey(KeyCode.D))
+        else 
         {
-            transform.Rotate(Vector3.up, turnSpeed * Time.deltaTime);
+            playerAnim.SetBool("Is Moving", false);
         }
+
+    
     }
 
     public void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Good"))
         {
-            ScoreManager.instance.AddScore();
+            ScoreManager.instance.AddScore(2);
+            Destroy(collision.gameObject);
         }
-    
-        if(collision.gameObject.CompareTag("Bad"))
+        else if(collision.gameObject.CompareTag("Bad"))
         {
-            ScoreManager.instance.SubPoint();
+            ScoreManager.instance.AddScore(-1);
+            Destroy(collision.gameObject);
         }
+
 
     }
 
